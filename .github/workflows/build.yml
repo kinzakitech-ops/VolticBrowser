@@ -1,0 +1,45 @@
+name: Build Voltic Browser for Windows
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.5.0'
+        host: 'windows'
+        target: 'desktop'
+        arch: 'win64_msvc2019_64'
+        modules: 'qtwebengine'
+
+    - name: Configure CMake
+      run: |
+        if (Test-Path build) { Remove-Item -Recurse -Force build }
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_PREFIX_PATH="$env:Qt6_DIR\lib\cmake\Qt6"
+
+    - name: Build
+      run: |
+        cd build
+        cmake --build . --config Release
+
+    - name: Deploy Qt Dependencies
+      run: |
+        cd build\Release
+        windeployqt.exe VolticBrowser.exe --no-translations --no-opengl --no-system-d3d-compiler --no-virtualkeyboard
+
+    - name: Upload EXE
+      uses: actions/upload-artifact@v4
+      with:
+        name: VolticBrowser-Windows
+        path: build\Release

@@ -1,0 +1,5 @@
+/home/codespace/VolticBrowser/build/CMakeFiles/VolticBrowser.dir
+/home/codespace/VolticBrowser/build/CMakeFiles/edit_cache.dir
+/home/codespace/VolticBrowser/build/CMakeFiles/rebuild_cache.dir
+/home/codespace/VolticBrowser/build/CMakeFiles/VolticBrowser_autogen_timestamp_deps.dir
+/home/codespace/VolticBrowser/build/CMakeFiles/VolticBrowser_autogen.dir
